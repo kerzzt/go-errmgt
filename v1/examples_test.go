@@ -16,7 +16,7 @@ func ExampleNewError() {
 	fmt.Printf("Type: %s\n", err.Type)
 	fmt.Printf("Code: %s\n", err.Code)
 	fmt.Printf("Status Code: %d\n", err.StatusCode)
-	
+
 	// Output:
 	// Error: [validation:invalid_email] Email format is invalid: Email must contain @ symbol
 	// Type: validation
@@ -26,11 +26,11 @@ func ExampleNewError() {
 
 func ExampleIsType() {
 	err := errmgt.NewError(errmgt.BusinessError, "insufficient_funds", "Not enough money")
-	
+
 	if errmgt.IsType(err, errmgt.BusinessError) {
 		fmt.Println("This is a business logic error")
 	}
-	
+
 	// Output:
 	// This is a business logic error
 }
@@ -38,7 +38,7 @@ func ExampleIsType() {
 func ExampleNewErrorWithCause() {
 	// Simulate a database connection error
 	dbErr := fmt.Errorf("connection timeout")
-	
+
 	err := errmgt.NewErrorWithCause(
 		errmgt.SystemError,
 		"db_connection_failed",
@@ -48,7 +48,7 @@ func ExampleNewErrorWithCause() {
 
 	fmt.Printf("Error: %s\n", err.Error())
 	fmt.Printf("Retryable: %t\n", errmgt.IsRetryable(err))
-	
+
 	// Output:
 	// Error: [system:db_connection_failed] Failed to connect to database
 	// Retryable: true
@@ -57,9 +57,9 @@ func ExampleNewErrorWithCause() {
 func ExampleWrap() {
 	originalErr := fmt.Errorf("file not found")
 	wrappedErr := errmgt.Wrap(originalErr, "failed to read configuration")
-	
+
 	fmt.Printf("Wrapped error: %s\n", wrappedErr.Error())
-	
+
 	// Output:
 	// Wrapped error: failed to read configuration: file not found
 }
@@ -79,7 +79,7 @@ func Example_usageInApplication() {
 			fmt.Printf("Unexpected error: %s\n", err.Error())
 		}
 	}
-	
+
 	// Output:
 	// Validation failed: [validation:invalid_email] Invalid email format: Must contain @ symbol
 }
@@ -92,21 +92,21 @@ func registerUser(email, password string) error {
 			WithContext("email", email).
 			WithStatusCode(400)
 	}
-	
+
 	// Validate password
 	if len(password) < 8 {
 		return errmgt.NewError(errmgt.ValidationError, "weak_password", "Password too weak").
 			WithDetails("Password must be at least 8 characters").
 			WithStatusCode(400)
 	}
-	
+
 	// Simulate database save
 	if err := saveToDatabase(email, password); err != nil {
 		return errmgt.NewErrorWithCause(errmgt.SystemError, "db_save_failed", "Failed to save user", err).
 			WithRetryable(true).
 			WithContext("operation", "user_registration")
 	}
-	
+
 	return nil
 }
 

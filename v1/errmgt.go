@@ -22,14 +22,14 @@ const (
 
 // ManagedError is a structured error with additional context
 type ManagedError struct {
-	Type        ErrorType         `json:"type"`
-	Code        string            `json:"code"`
-	Message     string            `json:"message"`
-	Details     string            `json:"details,omitempty"`
-	Cause       error             `json:"-"`
-	Context     map[string]string `json:"context,omitempty"`
-	Retryable   bool              `json:"retryable"`
-	StatusCode  int               `json:"status_code,omitempty"`
+	Type       ErrorType         `json:"type"`
+	Code       string            `json:"code"`
+	Message    string            `json:"message"`
+	Details    string            `json:"details,omitempty"`
+	Cause      error             `json:"-"`
+	Context    map[string]string `json:"context,omitempty"`
+	Retryable  bool              `json:"retryable"`
+	StatusCode int               `json:"status_code,omitempty"`
 }
 
 // Error implements the error interface
@@ -50,12 +50,12 @@ func (e *ManagedError) Is(target error) bool {
 	if target == nil {
 		return false
 	}
-	
+
 	var managedErr *ManagedError
 	if errors.As(target, &managedErr) {
 		return e.Type == managedErr.Type && e.Code == managedErr.Code
 	}
-	
+
 	return errors.Is(e.Cause, target)
 }
 
