@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # go-errmgt
 
 [![CI](https://github.com/kerzzt/go-errmgt/actions/workflows/ci.yml/badge.svg)](https://github.com/kerzzt/go-errmgt/actions/workflows/ci.yml)
@@ -56,6 +55,7 @@ For complete documentation, examples, and API reference, see the [v1 directory](
 5. Open a Pull Request
 
 ## License
+
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 =======
@@ -257,4 +257,3 @@ go test -cover ./...
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
->>>>>>> main
