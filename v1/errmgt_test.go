@@ -54,8 +54,9 @@ func TestManagedErrorError(t *testing.T) {
 			expected: "[validation:invalid_email] Invalid email format",
 		},
 		{
-			name:     "with details",
-			err:      NewError(ValidationError, "invalid_email", "Invalid email format").WithDetails("Email must contain @ symbol"),
+			name: "with details",
+			err: NewError(ValidationError, "invalid_email", "Invalid email format").
+				WithDetails("Email must contain @ symbol"),
 			expected: "[validation:invalid_email] Invalid email format: Email must contain @ symbol",
 		},
 	}

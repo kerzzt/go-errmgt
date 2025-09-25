@@ -22,14 +22,14 @@ const (
 
 // ManagedError is a structured error with additional context
 type ManagedError struct {
-	Type       ErrorType         `json:"type"`
 	Code       string            `json:"code"`
 	Message    string            `json:"message"`
 	Details    string            `json:"details,omitempty"`
 	Cause      error             `json:"-"`
 	Context    map[string]string `json:"context,omitempty"`
-	Retryable  bool              `json:"retryable"`
+	Type       ErrorType         `json:"type"`
 	StatusCode int               `json:"status_code,omitempty"`
+	Retryable  bool              `json:"retryable"`
 }
 
 // Error implements the error interface
